@@ -1,4 +1,4 @@
-package com.voislavj.messageserver;
+package com.vojajovanovic.messageserver;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

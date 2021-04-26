@@ -1,4 +1,4 @@
-package com.voislavj.messageserver;
+package com.vojajovanovic.messageserver;
 
 import org.java_websocket.WebSocket;
 

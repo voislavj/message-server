@@ -1,4 +1,4 @@
-package com.voislavj.messageserver;
+package com.vojajovanovic.messageserver;
 
 public class Log {
   public static boolean debug = false;
