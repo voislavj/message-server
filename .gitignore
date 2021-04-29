@@ -9,5 +9,4 @@ project.properties
 release.properties
 lib/build
 lib/bin
-pom.xml
 settings.xml
