@@ -1,0 +1,83 @@
+plugins {
+    // Apply the java-library plugin for API and implementation separation.
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Use JUnit test framework.
+    testImplementation 'junit:junit:4.13'
+
+    // This dependency is exported to consumers, that is to say found on their compile classpath.
+    api 'org.apache.commons:commons-math3:3.6.1'
+
+    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
+    implementation 'com.google.guava:guava:29.0-jre'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'org.java-websocket:Java-WebSocket:1.5.1'
+}
+
+def props = new Properties()
+file('../project.properties').withInputStream { props.load(it) }
+
+def isReleaseVersion = !props.getProperty('application.version').endsWith('-SNAPSHOT')
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+jar {
+    baseName props.getProperty('application.name')
+}
+
+publishing {
+    repositories {
+        maven {
+            def host = 'https://s01.oss.sonatype.org'
+            def pathRelease = '/service/local/staging/deploy/maven2/'
+            def pathSnapshot = '/content/repositories/snapshots/'
+            url = host + (isReleaseVersion ? pathRelease : pathSnapshot)
+            credentials {
+                username props.getProperty('ossrh.username')
+                password props.getProperty('ossrh.password')
+            }
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            pom {
+                groupId = props.getProperty('application.group')
+                artifactId = props.getProperty('application.name')
+                version = props.getProperty('application.version')
+                description = 'Messaging server for Java applications'
+                url = 'https://vojajovanovic.com/message-server'
+                from components.java
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git@github.com:voislavj/message-server.git'
+                    developerConnection = 'scm:git:git@github.com:voislavj/message-server.git'
+                    url = 'https://github.com/voislavj/message-server/'
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+tasks.withType(Sign) {
+    onlyIf { isReleaseVersion }
+}
