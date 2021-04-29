@@ -1,6 +1,13 @@
-# Ignore Gradle project-specific cache directory
+.classpath
 .gradle
+.project
+.settings
 
-# Ignore Gradle build output directory
 build
+gradle.properties
+project.properties
+release.properties
 lib/build
+lib/bin
+pom.xml
+settings.xml
