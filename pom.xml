@@ -7,7 +7,7 @@
 
   <groupId>com.vojajovanovic</groupId>
   <artifactId>messageserver</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>Message Server</name>
@@ -80,7 +80,7 @@
   <build>
     <resources>
       <resource>
-        <directory>${project.basedir}</directory>
+        <directory>${project.basedir}/src/</directory>
       </resource>
     </resources>
     <plugins>
@@ -117,7 +117,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 				<version>3.2.1</version>
-				<executions>
+        <executions>
 					<execution>
 						<id>attach-sources</id>
 						<goals>
@@ -146,15 +146,9 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>2.8.2</version>
-				<executions>
-					<execution>
-						<id>default-deploy</id>
-						<phase>deploy</phase>
-						<goals>
-							<goal>deploy</goal>
-						</goals>
-					</execution>
-				</executions>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -189,6 +183,15 @@
 					<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
 					<autoReleaseAfterClose>true</autoReleaseAfterClose>
 				</configuration>
+        <executions>
+          <execution>
+             <id>default-deploy</id>
+             <phase>deploy</phase>
+             <goals>
+                <goal>deploy</goal>
+             </goals>
+          </execution>
+       </executions>
 			</plugin>
     </plugins>
   </build>
