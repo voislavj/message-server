@@ -1,6 +1,0 @@
-application.version=1.0.0
-application.group=com.vojajovanovic
-application.name=messageserver
-
-ossrh.username=
-ossrh.password=
